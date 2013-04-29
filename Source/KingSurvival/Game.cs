@@ -5,9 +5,9 @@ using System.Text;
 
 namespace KingSurvival
 {
-    class KingSurvival
+    class Game
     {
-        private int[,] dyska;
+        private static char[,] board;
 
         private int[] pawnRows = { 0, 0, 0, 0 };
 
@@ -19,56 +19,49 @@ namespace KingSurvival
 
         //s + belejim belite poleta
         //s - belejim chernite poleta
-        private int whiteCell = '+';
+        private char whiteCell = '+';
 
-        private int blackCell = '-';
+        private char blackCell = '-';
 
         private int[] deltaRed = { -1, +1, +1, -1 }; //UR, DR, DL, UL
 
         private int[] deltaColona = { +1, +1, -1, -1 };
 
-        public KingSurvival()
+        public Game()
         {
-            dyska = new int[8, 8];
-            DaiMiDyskata();
+            board = new char[8, 8];
+            InitBoard();
         }
 
-        public void DaiMiDyskata()
+        public void InitBoard()
         {
-
-            for (int row = 0; row < dyska.GetLength(0); row++)
+            for (int row = 0; row < board.GetLength(0); row++)
             {
-
-                for (int colum = 0; colum < dyska.GetLength(1); colum++)
+                for (int colum = 0; colum < board.GetLength(1); colum++)
                 {
-
                     if ((row + colum) % 2 == 0)
                     {
-
-                        dyska[row, colum] = whiteCell;
-
+                        board[row, colum] = whiteCell;
                     }
 
                     else
                     {
-
-                        dyska[row, colum] = blackCell;
-
+                        board[row, colum] = blackCell;
                     }
-
                 }
-
             }
-            dyska[pawnRows[0], pawnColumns[0]] = 'A';
 
-            dyska[pawnRows[1], pawnColumns[1]] = 'B';
+            board[pawnRows[0], pawnColumns[0]] = 'A';
 
-            dyska[pawnRows[2], pawnColumns[2]] = 'C';
+            board[pawnRows[1], pawnColumns[1]] = 'B';
 
-            dyska[pawnRows[3], pawnColumns[3]] = 'D';
+            board[pawnRows[2], pawnColumns[2]] = 'C';
 
-            dyska[kingRow, kingColumn] = 'K';
+            board[pawnRows[3], pawnColumns[3]] = 'D';
+
+            board[kingRow, kingColumn] = 'K';
         }
+
         public bool MoveKingIfPossible(string command)
         {
             if (command.Length != 3)
@@ -89,8 +82,8 @@ namespace KingSurvival
             int kingNewColum = kingColumn + deltaColona[indexOfChange];
             if (proverka2(kingNewRow, kingNewColum))
             {
-                dyska[kingRow, kingColumn] = dyska[kingNewRow, kingNewColum];
-                dyska[kingNewRow, kingNewColum] = 'K';
+                board[kingRow, kingColumn] = board[kingNewRow, kingNewColum];
+                board[kingNewRow, kingNewColum] = 'K';
                 kingRow = kingNewRow;
 
 
@@ -155,8 +148,8 @@ namespace KingSurvival
             int pawnNewColum = pawnColumns[pawnIndex] + deltaColona[indexOfChange];
             if (proverka2(pawnNewRow, pawnNewColum))
             {
-                dyska[pawnRows[pawnIndex], pawnColumns[pawnIndex]] = dyska[pawnNewRow, pawnNewColum];
-                dyska[pawnNewRow, pawnNewColum] = command.ToUpper()[0];
+                board[pawnRows[pawnIndex], pawnColumns[pawnIndex]] = board[pawnNewRow, pawnNewColum];
+                board[pawnNewRow, pawnNewColum] = command.ToUpper()[0];
                 pawnRows[pawnIndex] = pawnNewRow;
                 pawnColumns[pawnIndex] = pawnNewColum;
                 return true;
@@ -170,9 +163,9 @@ namespace KingSurvival
             {
                 return true;
             }
-            for (int i = 0; i < dyska.GetLength(0); i += 2) // check if all powns are on the last row
+            for (int i = 0; i < board.GetLength(0); i += 2) // check if all powns are on the last row
             {
-                if (dyska[dyska.GetLength(1) - 1, i] == whiteCell || dyska[dyska.GetLength(1) - 1, i] == blackCell)
+                if (board[board.GetLength(1) - 1, i] == whiteCell || board[board.GetLength(1) - 1, i] == blackCell)
                 {
                     return false;
                 }
@@ -182,7 +175,7 @@ namespace KingSurvival
 
         private bool proverka(int row, int colum)
         {
-            if (row < 0 || row > dyska.GetLength(0) - 1 || colum < 0 || colum > dyska.GetLength(1) - 1)
+            if (row < 0 || row > board.GetLength(0) - 1 || colum < 0 || colum > board.GetLength(1) - 1)
             {
 
 
@@ -197,7 +190,7 @@ namespace KingSurvival
 
             if (proverka(row, colum))
             {
-                if (dyska[row, colum] == whiteCell || dyska[row, colum] == blackCell)
+                if (board[row, colum] == whiteCell || board[row, colum] == blackCell)
                 {
                     return true;
                 }
@@ -218,22 +211,10 @@ namespace KingSurvival
             }
             return false;
         }
-        public void PrintBoard()
-        {
-            for (int row = 0; row < dyska.GetLength(0); row++)
-            {
-                for (int colum = 0; colum < dyska.GetLength(1); colum++)
-                {
-                    int cell = dyska[row, colum];
-                    char toPrint = (char)cell;
-                    Console.Write(toPrint + " ");
-                }
-                Console.WriteLine();
-            }
-        }
+
         static void Main(string[] args)
         {
-            KingSurvival game = new KingSurvival();
+            Game game = new Game();
             int hodoveNaCarq = 0;
             bool isKingsTurn = true;
             while (true) //dokato igrata ne svyrshi - vyrti cikyla
@@ -250,7 +231,7 @@ namespace KingSurvival
                 else
                 {
                     Console.WriteLine();
-                    game.PrintBoard();
+                    ConsoleManager.PrintBoard(board);
                     if (isKingsTurn)
                     {
                         bool kingMoved = false;

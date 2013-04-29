@@ -41,7 +41,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="KingSurvival.cs" />
+    <Compile Include="ConsoleManager.cs" />
+    <Compile Include="GamePiece.cs" />
+    <Compile Include="King.cs" />
+    <Compile Include="Game.cs" />
+    <Compile Include="Pawn.cs" />
+    <Compile Include="Position.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
