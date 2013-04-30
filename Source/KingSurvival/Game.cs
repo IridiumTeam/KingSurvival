@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace KingSurvival
 {
@@ -9,9 +6,21 @@ namespace KingSurvival
     {
         private static char[,] board;
 
-        private int[] pawnRows = { 0, 0, 0, 0 };
+        private int[] pawnRows =
+        {
+            0,
+            0,
+            0,
+            0
+        };
 
-        private int[] pawnColumns = { 0, 2, 4, 6 };
+        private int[] pawnColumns =
+        {
+            0,
+            2,
+            4,
+            6
+        };
 
         private int kingRow = 7;
 
@@ -23,9 +32,21 @@ namespace KingSurvival
 
         private char blackCell = '-';
 
-        private int[] deltaRed = { -1, +1, +1, -1 }; //UR, DR, DL, UL
+        private int[] deltaRed =
+        {
+            -1,
+            +1,
+            +1,
+            -1
+        }; //UR, DR, DL, UL
 
-        private int[] deltaColona = { +1, +1, -1, -1 };
+        private int[] deltaColona =
+        {
+            +1,
+            +1,
+            -1,
+            -1
+        };
 
         public Game()
         {
@@ -43,7 +64,6 @@ namespace KingSurvival
                     {
                         board[row, colum] = whiteCell;
                     }
-
                     else
                     {
                         board[row, colum] = blackCell;
@@ -72,11 +92,28 @@ namespace KingSurvival
             int indexOfChange = -1;
             switch (commandMalka)
             {
-                case "kur": { indexOfChange = 0; } break;
-                case "kdr": { indexOfChange = 1; } break;
-                case "kdl": { indexOfChange = 2; } break;
-                case "kul": { indexOfChange = 3; } break;
-                default: return false;
+                case "kur":
+                    {
+                        indexOfChange = 0;
+                    }
+                    break;
+                case "kdr":
+                    {
+                        indexOfChange = 1;
+                    }
+                    break;
+                case "kdl":
+                    {
+                        indexOfChange = 2;
+                    }
+                    break;
+                case "kul":
+                    {
+                        indexOfChange = 3;
+                    }
+                    break;
+                default:
+                    return false;
             }
             int kingNewRow = kingRow + deltaRed[indexOfChange];
             int kingNewColum = kingColumn + deltaColona[indexOfChange];
@@ -85,13 +122,6 @@ namespace KingSurvival
                 board[kingRow, kingColumn] = board[kingNewRow, kingNewColum];
                 board[kingNewRow, kingNewColum] = 'K';
                 kingRow = kingNewRow;
-
-
-
-
-
-
-
 
                 kingColumn = kingNewColum;
                 return true;
@@ -113,34 +143,47 @@ namespace KingSurvival
                 case "bdr":
                 case "cdr":
                 case "ddr":
-                    { indexOfChange = 1; }
+                    {
+                        indexOfChange = 1;
+                    }
                     break;
                 case "adl":
                 case "bdl":
                 case "cdl":
                 case "ddl":
-                    { indexOfChange = 2; }
+                    {
+                        indexOfChange = 2;
+                    }
                     break;
-                default: return false;
+                default:
+                    return false;
             }
             int pawnIndex = -1;
             switch (command[0])
             {
                 case 'a':
                 case 'A':
-                    { pawnIndex = 0; }
+                    {
+                        pawnIndex = 0;
+                    }
                     break;
                 case 'b':
                 case 'B':
-                    { pawnIndex = 1; }
+                    {
+                        pawnIndex = 1;
+                    }
                     break;
                 case 'c':
                 case 'C':
-                    { pawnIndex = 2; }
+                    {
+                        pawnIndex = 2;
+                    }
                     break;
                 case 'd':
                 case 'D':
-                    { pawnIndex = 3; }
+                    {
+                        pawnIndex = 3;
+                    }
                     break;
             }
 
@@ -177,17 +220,12 @@ namespace KingSurvival
         {
             if (row < 0 || row > board.GetLength(0) - 1 || colum < 0 || colum > board.GetLength(1) - 1)
             {
-
-
-
-
                 return false;
-            } return true;
+            }return true;
         }
 
         private bool proverka2(int row, int colum)
         {
-
             if (proverka(row, colum))
             {
                 if (board[row, colum] == whiteCell || board[row, colum] == blackCell)
@@ -196,14 +234,10 @@ namespace KingSurvival
                 }
             }
             return false;
-
-
         }
+
         public bool KingLost()
         {
-
-
-
             if (!proverka2(kingRow + 1, kingColumn + 1) && !proverka2(kingRow + 1, kingColumn - 1) &&
                 !proverka2(kingRow - 1, kingColumn + 1) && !proverka2(kingRow - 1, kingColumn - 1))
             {
@@ -244,7 +278,7 @@ namespace KingSurvival
                             {
                                 Console.WriteLine("Illegal move!");
                             }
-                        } isKingsTurn = false;
+                        }isKingsTurn = false;
                         hodoveNaCarq++;
                     }
                     else
