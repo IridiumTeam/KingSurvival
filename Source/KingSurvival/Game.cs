@@ -14,7 +14,7 @@ namespace KingSurvival
             0
         };
 
-        private readonly int[] pawnColumns =
+        private readonly int[] pawnCols =
         {
             0,
             2,
@@ -72,13 +72,13 @@ namespace KingSurvival
                 }
             }
 
-            board[pawnRows[0], pawnColumns[0]] = 'A';
+            board[pawnRows[0], pawnCols[0]] = 'A';
 
-            board[pawnRows[1], pawnColumns[1]] = 'B';
+            board[pawnRows[1], pawnCols[1]] = 'B';
 
-            board[pawnRows[2], pawnColumns[2]] = 'C';
+            board[pawnRows[2], pawnCols[2]] = 'C';
 
-            board[pawnRows[3], pawnColumns[3]] = 'D';
+            board[pawnRows[3], pawnCols[3]] = 'D';
 
             board[kingRow, kingCol] = 'K';
         }
@@ -195,14 +195,14 @@ namespace KingSurvival
             }
 
             int pawnNewRow = pawnRows[pawnIndex] + deltaRow[indexOfChange];
-            int pawnNewCol = pawnColumns[pawnIndex] + deltaCol[indexOfChange];
+            int pawnNewCol = pawnCols[pawnIndex] + deltaCol[indexOfChange];
 
             if (IsCellObstacle(pawnNewRow, pawnNewCol))
             {
-                board[pawnRows[pawnIndex], pawnColumns[pawnIndex]] = board[pawnNewRow, pawnNewCol];
+                board[pawnRows[pawnIndex], pawnCols[pawnIndex]] = board[pawnNewRow, pawnNewCol];
                 board[pawnNewRow, pawnNewCol] = command.ToUpper()[0];
                 pawnRows[pawnIndex] = pawnNewRow;
-                pawnColumns[pawnIndex] = pawnNewCol;
+                pawnCols[pawnIndex] = pawnNewCol;
 
                 return true;
             }
