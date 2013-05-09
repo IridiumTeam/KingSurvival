@@ -6,7 +6,7 @@ namespace KingSurvival
     {
         private static char[,] board;
 
-        private int[] pawnRows =
+        private readonly int[] pawnRows =
         {
             0,
             0,
@@ -14,25 +14,23 @@ namespace KingSurvival
             0
         };
 
-        private int[] pawnColumns =
+        private readonly int[] pawnColumns =
         {
             0,
             2,
             4,
             6
         };
-
+        //TODO kingRow And kingCol should be constants?
         private int kingRow = 7;
 
-        private int kingColumn = 3;
+        private int kingCol = 3;
 
-        //s + belejim belite poleta
-        //s - belejim chernite poleta
-        private char whiteCell = '+';
+        private readonly char whiteCell = '+';
 
-        private char blackCell = '-';
+        private readonly char blackCell = '-';
 
-        private int[] deltaRed =
+        private readonly int[] deltaRow =
         {
             -1,
             +1,
@@ -40,7 +38,7 @@ namespace KingSurvival
             -1
         }; //UR, DR, DL, UL
 
-        private int[] deltaColona =
+        private readonly int[] deltaCol =
         {
             +1,
             +1,
@@ -48,25 +46,28 @@ namespace KingSurvival
             -1
         };
 
+
+        // TODO this method needs refactoring 
         public Game()
         {
             board = new char[8, 8];
-            InitBoard();
+            InitializeBoard();
         }
 
-        public void InitBoard()
+        // TODO can be separated to several methods
+        public void InitializeBoard()
         {
             for (int row = 0; row < board.GetLength(0); row++)
             {
-                for (int colum = 0; colum < board.GetLength(1); colum++)
+                for (int col = 0; col < board.GetLength(1); col++)
                 {
-                    if ((row + colum) % 2 == 0)
+                    if ((row + col) % 2 == 0)
                     {
-                        board[row, colum] = whiteCell;
+                        board[row, col] = whiteCell;
                     }
                     else
                     {
-                        board[row, colum] = blackCell;
+                        board[row, col] = blackCell;
                     }
                 }
             }
@@ -79,18 +80,19 @@ namespace KingSurvival
 
             board[pawnRows[3], pawnColumns[3]] = 'D';
 
-            board[kingRow, kingColumn] = 'K';
+            board[kingRow, kingCol] = 'K';
         }
-
+        //TODO needs refactoring
         public bool MoveKingIfPossible(string command)
         {
             if (command.Length != 3)
             {
                 return false;
             }
-            string commandMalka = command.ToLower();
+            string commandToLower = command.ToLower();
             int indexOfChange = -1;
-            switch (commandMalka)
+            // TODO check default return value
+            switch (commandToLower)
             {
                 case "kur":
                     {
@@ -115,28 +117,32 @@ namespace KingSurvival
                 default:
                     return false;
             }
-            int kingNewRow = kingRow + deltaRed[indexOfChange];
-            int kingNewColum = kingColumn + deltaColona[indexOfChange];
-            if (proverka2(kingNewRow, kingNewColum))
+            int kingNewRow = kingRow + deltaRow[indexOfChange];
+            int kingNewCol = kingCol + deltaCol[indexOfChange];
+            if (IsCellObstacle(kingNewRow, kingNewCol))
             {
-                board[kingRow, kingColumn] = board[kingNewRow, kingNewColum];
-                board[kingNewRow, kingNewColum] = 'K';
+                board[kingRow, kingCol] = board[kingNewRow, kingNewCol];
+                board[kingNewRow, kingNewCol] = 'K';
                 kingRow = kingNewRow;
 
-                kingColumn = kingNewColum;
+                kingCol = kingNewCol;
+
                 return true;
             }
             return false;
         }
 
+        // TODO refactor into several methods
         public bool MovePawnIfPossible(string command)
         {
             if (command.Length != 3)
             {
                 return false;
             }
-            string commandToLower = command.ToLower();
+
             int indexOfChange = -1;
+
+            string commandToLower = command.ToLower();
             switch (commandToLower)
             {
                 case "adr":
@@ -158,6 +164,7 @@ namespace KingSurvival
                 default:
                     return false;
             }
+
             int pawnIndex = -1;
             switch (command[0])
             {
@@ -187,16 +194,19 @@ namespace KingSurvival
                     break;
             }
 
-            int pawnNewRow = pawnRows[pawnIndex] + deltaRed[indexOfChange];
-            int pawnNewColum = pawnColumns[pawnIndex] + deltaColona[indexOfChange];
-            if (proverka2(pawnNewRow, pawnNewColum))
+            int pawnNewRow = pawnRows[pawnIndex] + deltaRow[indexOfChange];
+            int pawnNewCol = pawnColumns[pawnIndex] + deltaCol[indexOfChange];
+
+            if (IsCellObstacle(pawnNewRow, pawnNewCol))
             {
-                board[pawnRows[pawnIndex], pawnColumns[pawnIndex]] = board[pawnNewRow, pawnNewColum];
-                board[pawnNewRow, pawnNewColum] = command.ToUpper()[0];
+                board[pawnRows[pawnIndex], pawnColumns[pawnIndex]] = board[pawnNewRow, pawnNewCol];
+                board[pawnNewRow, pawnNewCol] = command.ToUpper()[0];
                 pawnRows[pawnIndex] = pawnNewRow;
-                pawnColumns[pawnIndex] = pawnNewColum;
+                pawnColumns[pawnIndex] = pawnNewCol;
+
                 return true;
             }
+
             return false;
         }
 
@@ -206,6 +216,7 @@ namespace KingSurvival
             {
                 return true;
             }
+
             for (int i = 0; i < board.GetLength(0); i += 2) // check if all powns are on the last row
             {
                 if (board[board.GetLength(1) - 1, i] == whiteCell || board[board.GetLength(1) - 1, i] == blackCell)
@@ -216,50 +227,58 @@ namespace KingSurvival
             return true;
         }
 
-        private bool proverka(int row, int colum)
+        // TODO reduce coupling of this method
+        private bool IsCellOnBoard(int row, int col)
         {
-            if (row < 0 || row > board.GetLength(0) - 1 || colum < 0 || colum > board.GetLength(1) - 1)
+            if (row < 0 || row > board.GetLength(0) - 1 || col < 0 || col > board.GetLength(1) - 1)
             {
                 return false;
-            }return true;
+            }
+            
+            return true;
         }
 
-        private bool proverka2(int row, int colum)
+        // TODO reduce coupling of this method
+        private bool IsCellObstacle(int row, int col)
         {
-            if (proverka(row, colum))
+            if (IsCellOnBoard(row, col))
             {
-                if (board[row, colum] == whiteCell || board[row, colum] == blackCell)
+                if (board[row, col] == whiteCell || board[row, col] == blackCell)
                 {
                     return true;
                 }
             }
+
             return false;
         }
 
         public bool KingLost()
         {
-            if (!proverka2(kingRow + 1, kingColumn + 1) && !proverka2(kingRow + 1, kingColumn - 1) &&
-                !proverka2(kingRow - 1, kingColumn + 1) && !proverka2(kingRow - 1, kingColumn - 1))
+            if (!IsCellObstacle(kingRow + 1, kingCol + 1) && !IsCellObstacle(kingRow + 1, kingCol - 1) &&
+                !IsCellObstacle(kingRow - 1, kingCol + 1) && !IsCellObstacle(kingRow - 1, kingCol - 1))
             {
                 return true;
             }
+
             return false;
         }
 
         static void Main(string[] args)
         {
             Game game = new Game();
-            int hodoveNaCarq = 0;
+
+            int kingMovesCount = 0;
             bool isKingsTurn = true;
-            while (true) //dokato igrata ne svyrshi - vyrti cikyla
+
+            while (true)
             {
                 if (game.KingWon())
                 {
-                    Console.WriteLine("King won in {0} turns", hodoveNaCarq); break;
+                    Console.WriteLine("King won in {0} turns", kingMovesCount); break;
                 }
                 else if (game.KingLost())
                 {
-                    Console.WriteLine("King lost in {0} turns", hodoveNaCarq);
+                    Console.WriteLine("King lost in {0} turns", kingMovesCount);
                     break;
                 }
                 else
@@ -278,15 +297,16 @@ namespace KingSurvival
                             {
                                 Console.WriteLine("Illegal move!");
                             }
-                        }isKingsTurn = false;
-                        hodoveNaCarq++;
+                        }
+                        isKingsTurn = false;
+                        kingMovesCount++;
                     }
                     else
                     {
                         bool pawnMoved = false;
                         while (!pawnMoved)
                         {
-                            Console.Write("Pawns' turn: ");
+                            Console.Write("Pawn's turn: ");
                             string command = Console.ReadLine();
                             pawnMoved = game.MovePawnIfPossible(command);
                             if (!pawnMoved)
