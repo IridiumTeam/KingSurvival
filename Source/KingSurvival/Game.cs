@@ -54,7 +54,7 @@ namespace KingSurvival
             InitializeBoard();
         }
 
-        // TODO can be separated to several methods
+        // TODO can be separated to several methods - member of the Board class
         public void InitializeBoard()
         {
             for (int row = 0; row < board.GetLength(0); row++)
@@ -210,6 +210,7 @@ namespace KingSurvival
             return false;
         }
 
+        // TODO belong to the King class
         public bool KingWon()
         {
             if (kingRow == 0) //check if king is on the first row
@@ -217,7 +218,7 @@ namespace KingSurvival
                 return true;
             }
 
-            for (int i = 0; i < board.GetLength(0); i += 2) // check if all powns are on the last row
+            for (int i = 0; i < board.GetLength(0); i += 2) // check if all pawns are on the last row
             {
                 if (board[board.GetLength(1) - 1, i] == whiteCell || board[board.GetLength(1) - 1, i] == blackCell)
                 {
@@ -225,6 +226,18 @@ namespace KingSurvival
                 }
             }
             return true;
+        }
+
+        // TODO belong to the King class
+        public bool KingLost()
+        {
+            if (!IsCellObstacle(kingRow + 1, kingCol + 1) && !IsCellObstacle(kingRow + 1, kingCol - 1) &&
+                !IsCellObstacle(kingRow - 1, kingCol + 1) && !IsCellObstacle(kingRow - 1, kingCol - 1))
+            {
+                return true;
+            }
+
+            return false;
         }
 
         // TODO reduce coupling of this method
@@ -247,17 +260,6 @@ namespace KingSurvival
                 {
                     return true;
                 }
-            }
-
-            return false;
-        }
-
-        public bool KingLost()
-        {
-            if (!IsCellObstacle(kingRow + 1, kingCol + 1) && !IsCellObstacle(kingRow + 1, kingCol - 1) &&
-                !IsCellObstacle(kingRow - 1, kingCol + 1) && !IsCellObstacle(kingRow - 1, kingCol - 1))
-            {
-                return true;
             }
 
             return false;
