@@ -1,8 +1,8 @@
-﻿using System;
-using System.Text;
-
-namespace KingSurvival
+﻿namespace KingSurvival
 {
+    using System;
+    using System.Text;
+
     public static class ConsoleManager
     {
         public static void PrintBoard(char[,] board)

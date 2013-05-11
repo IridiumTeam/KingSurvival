@@ -1,14 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace KingSurvival
+﻿namespace KingSurvival
 {
     public abstract class GamePiece
     {
-        // character
-        // position
+        private readonly char body;
+
+        private readonly Position position;
+
+        public GamePiece(char body, Position position)
+        {
+            this.Body = body;
+            this.Position = position;
+        }
+
+        public char Body
+        {
+            get
+            {
+                return this.body;
+            }
+            private set;
+        }
+
+        public Position Position
+        {
+            get
+            {
+                return this.position;
+            }
+
+            private set;
+        }
     }
 }

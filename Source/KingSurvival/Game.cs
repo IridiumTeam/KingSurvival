@@ -32,18 +32,12 @@ namespace KingSurvival
 
         private readonly int[] deltaRow =
         {
-            -1,
-            +1,
-            +1,
-            -1
+            -1, +1, +1, -1
         }; //UR, DR, DL, UL
 
         private readonly int[] deltaCol =
         {
-            +1,
-            +1,
-            -1,
-            -1
+            +1, +1, -1, -1
         };
 
 
@@ -82,6 +76,7 @@ namespace KingSurvival
 
             board[kingRow, kingCol] = 'K';
         }
+
         //TODO needs refactoring
         public bool MoveKingIfPossible(string command)
         {
@@ -119,7 +114,7 @@ namespace KingSurvival
             }
             int kingNewRow = kingRow + deltaRow[indexOfChange];
             int kingNewCol = kingCol + deltaCol[indexOfChange];
-            if (IsCellObstacle(kingNewRow, kingNewCol))
+            if (IsValidCell(kingNewRow, kingNewCol))
             {
                 board[kingRow, kingCol] = board[kingNewRow, kingNewCol];
                 board[kingNewRow, kingNewCol] = 'K';
@@ -197,7 +192,7 @@ namespace KingSurvival
             int pawnNewRow = pawnRows[pawnIndex] + deltaRow[indexOfChange];
             int pawnNewCol = pawnCols[pawnIndex] + deltaCol[indexOfChange];
 
-            if (IsCellObstacle(pawnNewRow, pawnNewCol))
+            if (IsValidCell(pawnNewRow, pawnNewCol))
             {
                 board[pawnRows[pawnIndex], pawnCols[pawnIndex]] = board[pawnNewRow, pawnNewCol];
                 board[pawnNewRow, pawnNewCol] = command.ToUpper()[0];
@@ -231,8 +226,8 @@ namespace KingSurvival
         // TODO belong to the King class
         public bool KingLost()
         {
-            if (!IsCellObstacle(kingRow + 1, kingCol + 1) && !IsCellObstacle(kingRow + 1, kingCol - 1) &&
-                !IsCellObstacle(kingRow - 1, kingCol + 1) && !IsCellObstacle(kingRow - 1, kingCol - 1))
+            if (!IsValidCell(kingRow + 1, kingCol + 1) && !IsValidCell(kingRow + 1, kingCol - 1) &&
+                !IsValidCell(kingRow - 1, kingCol + 1) && !IsValidCell(kingRow - 1, kingCol - 1))
             {
                 return true;
             }
@@ -252,7 +247,7 @@ namespace KingSurvival
         }
 
         // TODO reduce coupling of this method
-        private bool IsCellObstacle(int row, int col)
+        private bool IsValidCell(int row, int col)
         {
             if (IsCellOnBoard(row, col))
             {
