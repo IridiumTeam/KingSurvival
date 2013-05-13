@@ -42,20 +42,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Board.cs" />
-    <Compile Include="ConsoleManager.cs" />
-    <Compile Include="DeltaPosition.cs" />
-    <Compile Include="Direction.cs" />
-    <Compile Include="GamePiece.cs" />
-    <Compile Include="King.cs" />
+    <Compile Include="ChessboardManager.cs" />
+    <Compile Include="ChessPiece.cs" />
+    <Compile Include="ChessPieceType.cs" />
     <Compile Include="Game.cs" />
-    <Compile Include="Pawn.cs" />
-    <Compile Include="Position.cs" />
+    <Compile Include="Move.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-    <None Include="KingSurvivalClassDiagram.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
