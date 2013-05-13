@@ -187,6 +187,7 @@ namespace KingSurvivalUnitTests
         {
             ChessboardManager chessboardManager = new ChessboardManager();
 
+            //reaches line 7 
             chessboardManager.TryExecuteCommand("ADR", false);
             chessboardManager.TryExecuteCommand("ADR", false);
             chessboardManager.TryExecuteCommand("ADR", false);
@@ -194,8 +195,8 @@ namespace KingSurvivalUnitTests
             chessboardManager.TryExecuteCommand("ADR", false);
             chessboardManager.TryExecuteCommand("ADR", false);
             chessboardManager.TryExecuteCommand("ADR", false);
-            
 
+            //reaches line 7 
             chessboardManager.TryExecuteCommand("BDR", false);
             chessboardManager.TryExecuteCommand("BDR", false);
             chessboardManager.TryExecuteCommand("BDR", false);
@@ -203,8 +204,8 @@ namespace KingSurvivalUnitTests
             chessboardManager.TryExecuteCommand("BDR", false);
             chessboardManager.TryExecuteCommand("BDL", false);
             chessboardManager.TryExecuteCommand("BDL", false);
-            
 
+            //reaches line 7 
             chessboardManager.TryExecuteCommand("CDL", false);
             chessboardManager.TryExecuteCommand("CDL", false);
             chessboardManager.TryExecuteCommand("CDL", false);
@@ -213,21 +214,22 @@ namespace KingSurvivalUnitTests
             chessboardManager.TryExecuteCommand("CDR", false);
             chessboardManager.TryExecuteCommand("CDL", false);
 
+            //this pawn is blocked at line 6, row 0 by pawn C which is at line 7, col 1
             chessboardManager.TryExecuteCommand("DDL", false);
             chessboardManager.TryExecuteCommand("DDL", false);
             chessboardManager.TryExecuteCommand("DDL", false);
             chessboardManager.TryExecuteCommand("DDL", false);
             chessboardManager.TryExecuteCommand("DDL", false);
             chessboardManager.TryExecuteCommand("DDL", false);
-            //chessboardManager.TryExecuteCommand("DDR", false);
-                       
+                    
+            //the King does not need to reach row 0 to win  
             chessboardManager.TryExecuteCommand("KUR", true);
             chessboardManager.TryExecuteCommand("KUR", true);
             chessboardManager.TryExecuteCommand("KUR", true);
             chessboardManager.TryExecuteCommand("KUR", true);
             chessboardManager.TryExecuteCommand("KUL", true);
             chessboardManager.TryExecuteCommand("KUL", true);
-            //chessboardManager.TryExecuteCommand("KUL", true);
+           
 
             Assert.AreEqual(
                 true,
