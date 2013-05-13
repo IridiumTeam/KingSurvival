@@ -17,7 +17,7 @@ namespace KingSurvivalUnitTests
     public class ChessboardManagerTest
     {
         [TestMethod]
-        public void TestTryExecuteCommand1()
+        public void TestTryExecuteCommandInvalidCommand()
         {
             ChessboardManager chessboardManager = new ChessboardManager();
 
@@ -27,7 +27,7 @@ namespace KingSurvivalUnitTests
         }
 
         [TestMethod]
-        public void TestTryExecuteCommand2()
+        public void TestTryExecuteCommandCommandValidCommandKingUpLeft()
         {
             ChessboardManager chessboardManager = new ChessboardManager();
 
@@ -37,7 +37,7 @@ namespace KingSurvivalUnitTests
         }
 
         [TestMethod]
-        public void TestTryExecuteCommand3()
+        public void TestTryExecuteCommandValidCommandKingUpRight()
         {
             ChessboardManager chessboardManager = new ChessboardManager();
 
@@ -47,17 +47,17 @@ namespace KingSurvivalUnitTests
         }
 
         [TestMethod]
-        public void TestTryExecuteCommand4()
+        public void TestTryExecuteCommandPawnDownRight()
         {
             ChessboardManager chessboardManager = new ChessboardManager();
 
             bool success = chessboardManager.TryExecuteCommand("ADR", false);
 
-            Assert.AreEqual(true, success, "Command execution fails for the valid command \"ADL\".");
+            Assert.AreEqual(true, success, "Command execution fails for the valid command \"ADR\".");
         }
 
         [TestMethod]
-        public void TestKingMovesCount1()
+        public void TestKingMovesCount()
         {
             ChessboardManager chessboardManager = new ChessboardManager();
 
@@ -79,7 +79,7 @@ namespace KingSurvivalUnitTests
         }
 
         [TestMethod]
-        public void TestKingWins1()
+        public void TestKingWinsCaseFirst()
         {
             ChessboardManager chessboardManager = new ChessboardManager();
 
@@ -101,7 +101,7 @@ namespace KingSurvivalUnitTests
         }
 
         [TestMethod]
-        public void TestKingLoses1()
+        public void TestKingLosesCaseFirst()
         {
             ChessboardManager chessboardManager = new ChessboardManager();
 
@@ -135,7 +135,7 @@ namespace KingSurvivalUnitTests
         }
 
         [TestMethod]
-        public void TestToString1()
+        public void TestToStringStartScreen()
         {
             ChessboardManager chessboardManager = new ChessboardManager();
 
