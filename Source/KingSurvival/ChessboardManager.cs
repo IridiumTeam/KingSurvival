@@ -157,10 +157,8 @@ namespace KingSurvival
                     this.UpdatePosition(king, move);
                     return true;
                 }
-                else
-                {
-                    return false;
-                }
+
+                return false;
             }
             else
             {
@@ -177,10 +175,8 @@ namespace KingSurvival
                     this.UpdatePosition(pawn, move);
                     return true;
                 }
-                else
-                {
-                    return false;
-                }
+
+                return false;
             }
         }
 
