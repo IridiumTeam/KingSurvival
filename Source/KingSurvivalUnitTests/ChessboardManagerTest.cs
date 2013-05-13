@@ -183,7 +183,7 @@ namespace KingSurvivalUnitTests
         }
 
         [TestMethod]
-        public void TestKingWinsCaseFourth()
+        public void TestKingWinsWithNoValidPawnsMoves()
         {
             ChessboardManager chessboardManager = new ChessboardManager();
 
@@ -219,8 +219,8 @@ namespace KingSurvivalUnitTests
             chessboardManager.TryExecuteCommand("DDL", false);
             chessboardManager.TryExecuteCommand("DDL", false);
             chessboardManager.TryExecuteCommand("DDL", false);
-           
-            
+            //chessboardManager.TryExecuteCommand("DDR", false);
+                       
             chessboardManager.TryExecuteCommand("KUR", true);
             chessboardManager.TryExecuteCommand("KUR", true);
             chessboardManager.TryExecuteCommand("KUR", true);
