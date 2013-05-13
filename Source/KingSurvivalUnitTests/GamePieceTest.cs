@@ -4,6 +4,7 @@
 // </copyright>
 //
 // ********************************
+
 namespace KingSurvivalUnitTests
 {
     using System;
@@ -58,28 +59,6 @@ namespace KingSurvivalUnitTests
             Assert.AreEqual(chessPiece.Col, newChessPiece.Col);
             Assert.AreEqual(chessPiece.Character, newChessPiece.Character);
             Assert.AreEqual(chessPiece.Type, newChessPiece.Type);
-        }
-
-        [TestMethod]
-        public void TestGamePieceCloneWithReferenceEquals()
-        {
-            ChessPiece chessPiece = new ChessPiece(ChessPieceType.Pawn, 'A', 7, 7);
-
-            ChessPiece newChessPiece = (ChessPiece)chessPiece.Clone();
-
-            Assert.ReferenceEquals(chessPiece, newChessPiece);
-            
-        }
-
-        [TestMethod]
-        public void TestGamePieceCloneWithAreEqual()
-        {
-            ChessPiece chessPiece = new ChessPiece(ChessPieceType.Pawn, 'A', 7, 7);
-
-            ChessPiece newChessPiece = (ChessPiece)chessPiece.Clone();
-
-            Assert.AreEqual(chessPiece, newChessPiece);
-
         }
     }
 }
