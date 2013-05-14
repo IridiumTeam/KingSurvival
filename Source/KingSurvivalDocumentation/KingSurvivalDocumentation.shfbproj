@@ -15,7 +15,7 @@
     <RootNamespace>KingSurvivalDocumentation</RootNamespace>
     <Name>KingSurvivalDocumentation</Name>
     <!-- SHFB properties -->
-    <FrameworkVersion>.NET Portable Library 4.0 (Legacy)</FrameworkVersion>
+    <FrameworkVersion>.NET Framework 4.5</FrameworkVersion>
     <OutputPath>.\Help\</OutputPath>
     <HtmlHelpName>KingSurvivalDocumentation</HtmlHelpName>
     <Language>en-US</Language>

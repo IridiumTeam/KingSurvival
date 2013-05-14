@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shfbBuild product="Sandcastle Help File Builder" version="1.9.7.0" projectFile="C:\Users\Tony\Documents\GitHub\KingSurvival\Source\KingSurvivalDocumentation\KingSurvivalDocumentation.shfbproj" started="5/13/2013 9:25:57 PM">
+<shfbBuild product="Sandcastle Help File Builder" version="1.9.7.0" projectFile="C:\Users\Tony\Documents\GitHub\KingSurvival\Source\KingSurvivalDocumentation\KingSurvivalDocumentation.shfbproj" started="5/14/2013 8:09:26 PM">
 <buildStep step="Initializing">
 Finding tools...
 Found Sandcastle tools in &#39;C:\Program Files (x86)\Sandcastle\&#39;
@@ -26,7 +26,7 @@ Copying XML comments files
 </buildStep>
 <buildStep step="GenerateSharedContent">
 Generating shared content files (en-US, English (United States))...
-    Last step completed in 00:00:00.1030
+    Last step completed in 00:00:00.0450
 </buildStep>
 <buildStep step="GenerateApiFilter">
 Generating API filter for MRefBuilder...
@@ -44,7 +44,7 @@ Generating reflection information...
   Copyright c 2006-2013, Microsoft Corporation, All Rights Reserved.
   Portions Copyright c 2006-2013, Eric Woodruff, All Rights Reserved.
   Info: Applying XSL transformation &#39;C:\Program Files (x86)\Sandcastle\ProductionTransforms\MergeDuplicates.xsl&#39;.
-    Last step completed in 00:00:12.6500
+    Last step completed in 00:00:08.7860
 </buildStep>
 <buildStep step="GenerateNamespaceSummaries">
 Generating namespace summary information...
@@ -55,7 +55,7 @@ Applying visibility properties to reflection information file
     0 attribute nodes removed
     0 explicit interface implementations removed
     0 local and base class EII elements removed
-    Last step completed in 00:00:00.9710
+    Last step completed in 00:00:00.4270
 </buildStep>
 <buildStep step="TransformReflectionInfo">
 Transforming reflection output...
@@ -69,11 +69,11 @@ Transforming reflection output...
   Copyright c 2006-2013, Microsoft Corporation, All Rights Reserved.
   Portions Copyright c 2006-2013, Eric Woodruff, All Rights Reserved.
   Info: Applying XSL transformation &#39;C:\Program Files (x86)\Sandcastle\ProductionTransforms\ReflectionToManifest.xsl&#39;.
-    Last step completed in 00:00:10.0820
+    Last step completed in 00:00:09.6250
 </buildStep>
 <buildStep step="ModifyHelpTopicFilenames">
 Modifying help topic filenames in reflection information file
-    Last step completed in 00:00:00.0070
+    Last step completed in 00:00:00.0040
 </buildStep>
 <buildStep step="CopyStandardContent">
 Copying standard help content...
@@ -271,12 +271,12 @@ C:\Program Files (x86)\Sandcastle\\Presentation\VS2010\branding -&gt; C:\Users\T
     C:\Program Files (x86)\Sandcastle\Presentation\VS2010\branding\ps-instrumentedLink.xslt -> C:\Users\Tony\Documents\GitHub\KingSurvival\Source\KingSurvivalDocumentation\Help\Working\branding\ps-instrumentedLink.xslt
     C:\Program Files (x86)\Sandcastle\Presentation\VS2010\branding\ps-languageSpecificText.xslt -> C:\Users\Tony\Documents\GitHub\KingSurvival\Source\KingSurvivalDocumentation\Help\Working\branding\ps-languageSpecificText.xslt
     C:\Program Files (x86)\Sandcastle\Presentation\VS2010\branding\ps-codesnippet.xslt -> C:\Users\Tony\Documents\GitHub\KingSurvival\Source\KingSurvivalDocumentation\Help\Working\branding\ps-codesnippet.xslt
-    Last step completed in 00:00:01.7520
+    Last step completed in 00:00:01.3120
 </buildStep>
 <buildStep step="CopyAdditionalContent">
 Copying additional content files...
 No additional content to copy
-    Last step completed in 00:00:00.0000
+    Last step completed in 00:00:00.0010
 </buildStep>
 <buildStep step="MergeTablesOfContents">
 Merging conceptual and additional tables of contents...
@@ -290,17 +290,17 @@ Generating intermediate table of contents file...
   Portions Copyright c 2006-2013, Eric Woodruff, All Rights Reserved.
   Info: Applying XSL transformation &#39;C:\Program Files (x86)\Sandcastle\\ProductionTransforms\CreateVSToc.xsl&#39;.
 Generating conceptual content intermediate TOC file...
-    Last step completed in 00:00:05.1740
+    Last step completed in 00:00:05.0480
 </buildStep>
 <buildStep step="CreateBuildAssemblerConfigs">
 Creating Sandcastle configuration files...
     sandcastle.config
-    Last step completed in 00:00:01.2020
+    Last step completed in 00:00:00.1860
 </buildStep>
 <buildStep step="MergeCustomConfigs">
 Merging custom build component configurations
 C:\Users\Tony\Documents\GitHub\KingSurvival\Source\KingSurvivalDocumentation\Help\Working\sandcastle.config
-    Last step completed in 00:00:00.9030
+    Last step completed in 00:00:00.6920
 </buildStep>
 <buildStep step="BuildReferenceTopics">
 Building reference help topics...
@@ -313,11 +313,11 @@ Building reference help topics...
   Info: Processed 31 topic(s)
   Diagnostic: CopyFromIndexComponent: &quot;reflection&quot; in-memory cache entries used: 2 of 15.
   Diagnostic: CopyFromIndexComponent: &quot;comments&quot; in-memory cache entries used: 3 of 30.
-    Last step completed in 00:00:39.8670
+    Last step completed in 00:01:05.2780
 </buildStep>
 <buildStep step="CombiningIntermediateTocFiles">
 Combining conceptual and API intermediate TOC files...
-    Last step completed in 00:00:00.0010
+    Last step completed in 00:00:00.0090
 </buildStep>
 <buildStep step="ExtractingHtmlInfo">
 Extracting HTML info for HTML Help 1 and/or website...
@@ -333,11 +333,11 @@ Processed 31 HTML files
 Sorting keywords and generating See Also indices
 Saving HTML Help 1 keyword index to C:\Users\Tony\Documents\GitHub\KingSurvival\Source\KingSurvivalDocumentation\Help\Working\KingSurvivalDocumentation.hhk
 Saving HTML Help 1 table of contents to C:\Users\Tony\Documents\GitHub\KingSurvival\Source\KingSurvivalDocumentation\Help\Working\KingSurvivalDocumentation.hhc
-    Last step completed in 00:00:03.3940
+    Last step completed in 00:00:06.4060
 </buildStep>
 <buildStep step="GenerateHelpFormatTableOfContents">
 Generating HTML Help 1 table of contents file...
-    Last step completed in 00:00:00.0010
+    Last step completed in 00:00:00.0000
 </buildStep>
 <buildStep step="GenerateHelpFileIndex">
 Generating HTML Help 1 index file...
@@ -345,7 +345,7 @@ Generating HTML Help 1 index file...
 </buildStep>
 <buildStep step="GenerateHelpProject">
 Generating HTML Help 1 project file...
-    Last step completed in 00:00:00.0040
+    Last step completed in 00:00:00.0200
 </buildStep>
 <buildStep step="CompilingHelpFile">
 Compiling HTML Help 1 file...
@@ -360,7 +360,7 @@ Compiling HTML Help 1 file...
   
   
   
-  Compile time: 0 minutes, 4 seconds
+  Compile time: 0 minutes, 3 seconds
   
   33	Topics
   
@@ -374,19 +374,19 @@ Compiling HTML Help 1 file...
   
   
   
-  Created c:\Users\Tony\Documents\GitHub\KingSurvival\Source\KingSurvivalDocumentation\Help\Working\Output\HtmlHelp1\KingSurvivalDocumentation.chm, 76,287 bytes
+  Created c:\Users\Tony\Documents\GitHub\KingSurvival\Source\KingSurvivalDocumentation\Help\Working\Output\HtmlHelp1\KingSurvivalDocumentation.chm, 76,277 bytes
   
-  Compression decreased file by 305,134 bytes.
+  Compression decreased file by 305,144 bytes.
   
-    Last step completed in 00:00:08.3840
+    Last step completed in 00:00:12.2020
 </buildStep>
 <buildStep step="CleanIntermediates">
 Removing intermediate files...
-    Last step completed in 00:00:00.0840
+    Last step completed in 00:00:00.2470
 </buildStep>
 <buildStep step="Completed">
 
-Build completed successfully at 05/13/2013 09:27 PM.  Total time: 00:01:25.9380
+Build completed successfully at 05/14/2013 08:11 PM.  Total time: 00:01:51.0330
 
 </buildStep>
 </shfbBuild>
