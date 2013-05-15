@@ -20,6 +20,13 @@ namespace KingSurvival
         {
             ChessboardManager chessboardManager = new ChessboardManager();
 
+            Console.WriteLine(
+                "KING SURVIVAL\n" +
+                "The king has to reach the top row of the \n" +
+                "chessboard without being caught by the pawns.\n" +
+                "The valid commands are:\n" +
+                chessboardManager.GetValidCommands());
+
             bool kingsTurn = true;
 
             while (true)
@@ -40,21 +47,30 @@ namespace KingSurvival
                     Console.WriteLine(chessboardManager);
 
                     string command;
-                    bool executionSuccessful = false;
-                    string actor = kingsTurn ? "King" : "Pawns";
+                    bool moveSuccessful = false;
+                    string actor = kingsTurn ? "King" : "Pawn";
 
                     do
                     {
                         Console.Write("{0}'s turn: ", actor);
                         command = Console.ReadLine();
                         command = command.Trim().ToUpper();
-                        executionSuccessful = chessboardManager.TryExecuteCommand(command, kingsTurn);
-                        if (!executionSuccessful)
+
+                        if (kingsTurn)
+                        {
+                            moveSuccessful = chessboardManager.TryMoveKing(command);
+                        }
+                        else
+                        {
+                            moveSuccessful = chessboardManager.TryMovePawn(command);
+                        }
+
+                        if (!moveSuccessful)
                         {
                             Console.WriteLine("Invalid move.");
                         }
                     }
-                    while (!executionSuccessful);
+                    while (!moveSuccessful);
 
                     kingsTurn = !kingsTurn;
                 }

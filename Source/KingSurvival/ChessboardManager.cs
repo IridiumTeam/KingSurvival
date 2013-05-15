@@ -16,18 +16,25 @@ namespace KingSurvival
     /// </summary>
     public class ChessboardManager
     {
+        #region Private Fields
+
         private const int ChessboardSize = 8;
         private const char KingCharacter = 'K';
         private const char WhiteSquareCharacter = '+';
         private const char BlackSquareCharacter = '-';
 
-        private static readonly string[] Commands = { "KUL", "KUR", "KDL", "KDR", "ADL", "ADR", "BDL", "BDR", "CDL", "CDR", "DDL", "DDR" };
+        private static readonly string[] ValidKingCommands = { "KUL", "KUR", "KDL", "KDR" };
+        private static readonly string[] ValidPawnCommands = { "ADL", "ADR", "BDL", "BDR", "CDL", "CDR", "DDL", "DDR" };
         private static readonly Dictionary<string, Move> ValidKingMoves;
         private static readonly Dictionary<string, Move> ValidPawnMoves;
 
         private Dictionary<char, ChessPiece> chessPieces;
 
         private bool[,] occupied;
+
+        #endregion
+
+        #region Constructors
 
         /// <summary>
         /// Initializes static members of the <see cref="ChessboardManager"/> class.
@@ -65,6 +72,10 @@ namespace KingSurvival
             this.chessPieces['D'] = new ChessPiece(ChessPieceType.Pawn, 'D', 0, 6);
         }
 
+        #endregion
+
+        #region Properties
+
         /// <summary>
         /// Gets the number of moves made by the king.
         /// </summary>
@@ -75,6 +86,10 @@ namespace KingSurvival
                 return this.chessPieces[KingCharacter].MovesMade;
             }
         }
+
+        #endregion
+
+        #region Public Methods
 
         /// <summary>
         /// Checks if the king wins.
@@ -130,54 +145,23 @@ namespace KingSurvival
         }
 
         /// <summary>
-        /// Parses the command and executes it if it is valid.
+        /// Parses the command which moves the king and executes it if it is valid.
         /// </summary>
         /// <param name="command">The command to execute.</param>
-        /// <param name="kingsTurn">Specifies if it is the king's turn.</param>
         /// <returns>True if parsing and execution are successful, otherwise - false.</returns>
-        public bool TryExecuteCommand(string command, bool kingsTurn)
+        public bool TryMoveKing(string command)
         {
-            if (!Commands.Contains(command))
-            {
-                return false;
-            }
+            return this.TryExecuteCommand(command, ValidKingCommands, ValidKingMoves);
+        }
 
-            if (kingsTurn)
-            {
-                if (!command.StartsWith(KingCharacter.ToString()))
-                {
-                    return false;
-                }
-
-                ChessPiece king = this.chessPieces[KingCharacter];
-                Move move = ValidKingMoves[command.Substring(1)];
-
-                if (this.IsPositionValid(king.Row + move.DeltaRow, king.Col + move.DeltaCol))
-                {
-                    this.UpdatePosition(king, move);
-                    return true;
-                }
-
-                return false;
-            }
-            else
-            {
-                if (command.StartsWith(KingCharacter.ToString()))
-                {
-                    return false;
-                }
-
-                ChessPiece pawn = this.chessPieces[command[0]];
-                Move move = ValidPawnMoves[command.Substring(1)];
-
-                if (this.IsPositionValid(pawn.Row + move.DeltaRow, pawn.Col + move.DeltaCol))
-                {
-                    this.UpdatePosition(pawn, move);
-                    return true;
-                }
-
-                return false;
-            }
+        /// <summary>
+        /// Parses the command which moves the pawn and executes it if it is valid.
+        /// </summary>
+        /// <param name="command">The command to execute.</param>
+        /// <returns>True if parsing and execution are successful, otherwise - false.</returns>
+        public bool TryMovePawn(string command)
+        {
+            return this.TryExecuteCommand(command, ValidPawnCommands, ValidPawnMoves);
         }
 
         /// <summary>
@@ -194,6 +178,21 @@ namespace KingSurvival
 
             ChessPiece chessPiece = this.chessPieces[character];
             return (ChessPiece)chessPiece.Clone();
+        }
+
+        /// <summary>
+        /// Returns the valid commands that can be used for moving 
+        /// the king and the pawns.
+        /// </summary>
+        /// <returns>A string containing the valid "move" commands.</returns>
+        public string GetValidCommands()
+        {
+            StringBuilder result = new StringBuilder();
+
+            result.AppendLine("King: " + string.Join(", ", ValidKingCommands));
+            result.AppendLine("Pawns: " + string.Join(", ", ValidPawnCommands));
+
+            return result.ToString();
         }
 
         /// <summary>
@@ -245,6 +244,10 @@ namespace KingSurvival
             return result.ToString();
         }
 
+        #endregion
+
+        #region Private Methods
+
         private bool IsPositionOnTheChessboard(int row, int col)
         {
             return row >= 0 && row < ChessboardSize &&
@@ -261,17 +264,32 @@ namespace KingSurvival
             return this.IsPositionOnTheChessboard(row, col) && this.IsPositionEmpty(row, col);
         }
 
+        private bool TryExecuteCommand(string command, string[] validCommands, Dictionary<string, Move> validMoves)
+        {
+            if (!validCommands.Contains(command))
+            {
+                return false;
+            }
+
+            ChessPiece chessPiece = this.chessPieces[command[0]];
+            Move move = validMoves[command.Substring(1)];
+
+            if (this.IsPositionValid(chessPiece.Row + move.DeltaRow, chessPiece.Col + move.DeltaCol))
+            {
+                this.UpdatePosition(chessPiece, move);
+                return true;
+            }
+
+            return false;
+        }
+
         private void UpdatePosition(ChessPiece chessPiece, Move move)
         {
             this.occupied[chessPiece.Row, chessPiece.Col] = false;
 
             chessPiece.Row += move.DeltaRow;
             chessPiece.Col += move.DeltaCol;
-
-            if (chessPiece.Type == ChessPieceType.King)
-            {
-                chessPiece.MovesMade++;
-            }
+            chessPiece.MovesMade++;
 
             this.occupied[chessPiece.Row, chessPiece.Col] = true;
         }
@@ -290,5 +308,7 @@ namespace KingSurvival
 
             return null;
         }
+
+        #endregion
     }
 }

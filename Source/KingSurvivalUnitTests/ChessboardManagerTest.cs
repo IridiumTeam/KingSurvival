@@ -17,400 +17,386 @@ namespace KingSurvivalUnitTests
     [TestClass]
     public class ChessboardManagerTest
     {
-        #region TryExecuteCommand Tests
-        
+        #region TryMoveKing & TryMovePawn Tests
+
         [TestMethod]
-        public void TestTryExecuteCommandInvalidCommand()
+        public void TestTryMoveKing_InvalidCommand()
         {
             ChessboardManager chessboardManager = new ChessboardManager();
-            
-            bool success = chessboardManager.TryExecuteCommand("qwerty", true);
-            
-            Assert.IsFalse(success, "Command execution returns success for invalid commands.");
+
+            bool success = chessboardManager.TryMoveKing("qwerty");
+
+            Assert.IsFalse(success, "Move king command returns success for invalid commands.");
         }
-        
+
         [TestMethod]
-        public void TestTryExecuteCommandInvalidCommandForKingWhenKingsTurn()
+        public void TestTryMovePawn_InvalidCommand()
         {
             ChessboardManager chessboardManager = new ChessboardManager();
-            
-            bool success = chessboardManager.TryExecuteCommand("ADL", true);
-            
-            Assert.IsFalse(success, "Command execution returns success for invalid commands.");
+
+            bool success = chessboardManager.TryMovePawn(null);
+
+            Assert.IsFalse(success, "Move pawn command returns success for invalid commands.");
         }
-        
+
         [TestMethod]
-        public void TestTryExecuteCommandCommandValidCommandKingUpLeft()
+        public void TestTryMoveKing_CommandKingUpLeft1()
         {
             ChessboardManager chessboardManager = new ChessboardManager();
-            
-            bool success = chessboardManager.TryExecuteCommand("KUL", true);
-            
+
+            bool success = chessboardManager.TryMoveKing("KUL");
+
             Assert.IsTrue(success, "Command execution fails for the valid command \"KUL\".");
         }
-        
+
         [TestMethod]
-        public void TestTryExecuteCommandValidCommandKingUpRight()
+        public void TestTryMoveKing_CommandKingUpLeft2()
         {
             ChessboardManager chessboardManager = new ChessboardManager();
-            
-            bool success = chessboardManager.TryExecuteCommand("KUR", false);
-            
-            Assert.IsFalse(success, "Command execution returns success for \"KUR\" when it's not the king's turn.");
+
+            ChessPiece chessPieceBefore = chessboardManager.GetChessPiece('K');
+
+            bool success = chessboardManager.TryMoveKing("KUL");
+            Assert.IsTrue(success);
+
+            ChessPiece chessPieceAfter = chessboardManager.GetChessPiece('K');
+
+            Assert.AreEqual(chessPieceBefore.Row - 1, chessPieceAfter.Row, "King position is incorrect.");
+            Assert.AreEqual(chessPieceBefore.Col - 1, chessPieceAfter.Col, "King position is incorrect.");
         }
-        
+
         [TestMethod]
-        public void TestTryExecuteCommandPawnDownRight()
+        public void TestTryMovePawn_CommandPawnDownRight1()
         {
             ChessboardManager chessboardManager = new ChessboardManager();
-            
-            bool success = chessboardManager.TryExecuteCommand("ADR", false);
-            
+
+            bool success = chessboardManager.TryMovePawn("ADR");
+
             Assert.IsTrue(success, "Command execution fails for the valid command \"ADR\".");
         }
-        
+
+        [TestMethod]
+        public void TestTryMovePawn_CommandPawnDownRight2()
+        {
+            ChessboardManager chessboardManager = new ChessboardManager();
+
+            ChessPiece chessPieceBefore = chessboardManager.GetChessPiece('A');
+
+            bool success = chessboardManager.TryMovePawn("ADR");
+            Assert.IsTrue(success);
+
+            ChessPiece chessPieceAfter = chessboardManager.GetChessPiece('A');
+
+            Assert.AreEqual(chessPieceBefore.Row + 1, chessPieceAfter.Row, "Pawn position is incorrect.");
+            Assert.AreEqual(chessPieceBefore.Col + 1, chessPieceAfter.Col, "Pawn position is incorrect.");
+        }
+
         #endregion
-        
-        #region KingMovesCount test
-        
+
+        #region KingMovesCount Tests
+
         [TestMethod]
         public void TestKingMovesCount()
         {
             ChessboardManager chessboardManager = new ChessboardManager();
-            
-            chessboardManager.TryExecuteCommand("KUL", true);
-            chessboardManager.TryExecuteCommand("KUL", true);
-            chessboardManager.TryExecuteCommand("KUL", true);
-            chessboardManager.TryExecuteCommand("KUR", true);
-            chessboardManager.TryExecuteCommand("KUR", true);
-            chessboardManager.TryExecuteCommand("KUR", true);
-            
-            chessboardManager.TryExecuteCommand("CDR", false);
-            
-            chessboardManager.TryExecuteCommand("KUR", true);
-            
+
+            chessboardManager.TryMoveKing("KUL");
+            chessboardManager.TryMoveKing("KUL");
+            chessboardManager.TryMoveKing("KUL");
+            chessboardManager.TryMoveKing("KUR");
+            chessboardManager.TryMoveKing("KUR");
+            chessboardManager.TryMoveKing("KUR");
+
+            chessboardManager.TryMovePawn("CDR");
+
+            chessboardManager.TryMoveKing("KUR");
+
             Assert.AreEqual(
                 7,
                 chessboardManager.KingMovesCount,
                 "The moves made by the king are not counted correctly.");
         }
-        
+
         #endregion
-        
+
         #region KingWins Tests
-        
+
         [TestMethod]
-        public void TestKingWinsCaseFirst()
+        public void TestKingWins_Case1()
         {
             ChessboardManager chessboardManager = new ChessboardManager();
-            
-            chessboardManager.TryExecuteCommand("KUL", true);
-            chessboardManager.TryExecuteCommand("KUL", true);
-            chessboardManager.TryExecuteCommand("KUL", true);
-            chessboardManager.TryExecuteCommand("KUR", true);
-            chessboardManager.TryExecuteCommand("KUR", true);
-            chessboardManager.TryExecuteCommand("KUR", true);
 
-            chessboardManager.TryExecuteCommand("CDR", false);
+            chessboardManager.TryMoveKing("KUL");
+            chessboardManager.TryMoveKing("KUL");
+            chessboardManager.TryMoveKing("KUL");
+            chessboardManager.TryMoveKing("KUR");
+            chessboardManager.TryMoveKing("KUR");
+            chessboardManager.TryMoveKing("KUR");
 
-            chessboardManager.TryExecuteCommand("KUR", true);
-                
-            Assert.IsTrue(chessboardManager.KingWins(),
+            chessboardManager.TryMovePawn("CDR");
+
+            chessboardManager.TryMoveKing("KUR");
+
+            Assert.IsTrue(
+                chessboardManager.KingWins(),
                 "The check whether the king wins doesn't work correctly.");
         }
-        
+
         [TestMethod]
-        public void TestKingWinsCaseSecond()
+        public void TestKingWins_Case2()
         {
             ChessboardManager chessboardManager = new ChessboardManager();
 
-            chessboardManager.TryExecuteCommand("KUR", true);
+            chessboardManager.TryMoveKing("KUR");
+            chessboardManager.TryMovePawn("BDL");
+            chessboardManager.TryMoveKing("KUL");
+            chessboardManager.TryMovePawn("CDL");
+            chessboardManager.TryMoveKing("KUR");
+            chessboardManager.TryMovePawn("DDL");
+            chessboardManager.TryMoveKing("KUR");
+            chessboardManager.TryMovePawn("DDL");
+            chessboardManager.TryMoveKing("KUR");
+            chessboardManager.TryMovePawn("CDL");
+            chessboardManager.TryMoveKing("KUL");
+            chessboardManager.TryMovePawn("BDL");
+            chessboardManager.TryMoveKing("KUL");
 
-            chessboardManager.TryExecuteCommand("BDL", false);
+            Assert.AreEqual(7, chessboardManager.KingMovesCount, "King moves are not counted correctly.");
 
-            chessboardManager.TryExecuteCommand("KUL", true);
-
-            chessboardManager.TryExecuteCommand("CDL", false);
-
-            chessboardManager.TryExecuteCommand("KUR", true);
-
-            chessboardManager.TryExecuteCommand("DDL", false);
-
-            chessboardManager.TryExecuteCommand("KUR", true);
-
-            chessboardManager.TryExecuteCommand("DDL", false);
-
-            chessboardManager.TryExecuteCommand("KUR", true);
-
-            chessboardManager.TryExecuteCommand("CDL", false);
-
-            chessboardManager.TryExecuteCommand("KUL", true);
-
-            chessboardManager.TryExecuteCommand("BDL", false);
-
-            chessboardManager.TryExecuteCommand("KUL", true);
-                
-            Assert.IsTrue(chessboardManager.KingWins(),
+            Assert.IsTrue(
+                chessboardManager.KingWins(),
                 "The check whether the king wins doesn't work correctly.");
         }
-        
+
         [TestMethod]
-        public void TestKingWinsCaseThird()
+        public void TestKingWins_Case3()
         {
             ChessboardManager chessboardManager = new ChessboardManager();
 
-            chessboardManager.TryExecuteCommand("KUL", true);
+            chessboardManager.TryMoveKing("KUL");
+            chessboardManager.TryMovePawn("ADR");
+            chessboardManager.TryMoveKing("KDL");
+            chessboardManager.TryMoveKing("KUR");
+            chessboardManager.TryMoveKing("KUL");
+            chessboardManager.TryMovePawn("ADR");
+            chessboardManager.TryMoveKing("KDR");
 
-            chessboardManager.TryExecuteCommand("ADR", false);
-            
-            chessboardManager.TryExecuteCommand("KDL", true);
-            chessboardManager.TryExecuteCommand("KUR", true);
-            chessboardManager.TryExecuteCommand("KUL", true);
+            // the king: (5, 1)
+            chessboardManager.TryMoveKing("KUL");
+            chessboardManager.TryMoveKing("KUR");
+            chessboardManager.TryMovePawn("DDR");
+            chessboardManager.TryMoveKing("KUL");
 
-            chessboardManager.TryExecuteCommand("ADR", false);
-            
-            chessboardManager.TryExecuteCommand("KDR", true);
-            //5, 1
-            chessboardManager.TryExecuteCommand("KUL", true);
+            // pawn C: (1, 5)
+            chessboardManager.TryMovePawn("CDR");
 
-            chessboardManager.TryExecuteCommand("KUR", true);
-            
-            chessboardManager.TryExecuteCommand("DDR", false);
-            chessboardManager.TryExecuteCommand("KUL", true);
-            //1, 5
-            chessboardManager.TryExecuteCommand("CDR", false);
-            //3, 1
-            chessboardManager.TryExecuteCommand("KUR", true);
-            //1, 3
-            chessboardManager.TryExecuteCommand("BDR", false);
-            //2, 0
-            chessboardManager.TryExecuteCommand("KUL", true);
-            
-            chessboardManager.TryExecuteCommand("DDL", false);
-            //1, 1
-            chessboardManager.TryExecuteCommand("KUR", true);
+            // pawn B: (1, 3)
+            chessboardManager.TryMovePawn("BDR");
 
-            chessboardManager.TryExecuteCommand("KUR", true);
-                
-            Assert.IsTrue(chessboardManager.KingWins(),
+            // the king: (2, 0)
+            chessboardManager.TryMoveKing("KUL");
+            chessboardManager.TryMovePawn("DDL");
+
+            // the king: (1, 1)
+            chessboardManager.TryMoveKing("KUR");
+            chessboardManager.TryMoveKing("KUR");
+
+            Assert.IsTrue(
+                chessboardManager.KingWins(),
                 "The check whether the king wins doesn't work correctly.");
         }
-        
+
         [TestMethod]
-        public void TestKingWinsWithNoValidPawnsMoves()
+        public void TestKingWins_PawnsCannotMoveAnyFurther()
         {
             ChessboardManager chessboardManager = new ChessboardManager();
-            
-            //reaches line 7 
-            chessboardManager.TryExecuteCommand("ADR", false);
-            chessboardManager.TryExecuteCommand("ADR", false);
-            chessboardManager.TryExecuteCommand("ADR", false);
-            chessboardManager.TryExecuteCommand("ADR", false);
-            chessboardManager.TryExecuteCommand("ADR", false);
-            chessboardManager.TryExecuteCommand("ADR", false);
-            chessboardManager.TryExecuteCommand("ADR", false);
-            
-            //reaches line 7 
-            chessboardManager.TryExecuteCommand("BDR", false);
-            chessboardManager.TryExecuteCommand("BDR", false);
-            chessboardManager.TryExecuteCommand("BDR", false);
-            chessboardManager.TryExecuteCommand("BDR", false);
-            chessboardManager.TryExecuteCommand("BDR", false);
-            chessboardManager.TryExecuteCommand("BDL", false);
-            chessboardManager.TryExecuteCommand("BDL", false);
-            
-            //reaches line 7 
-            chessboardManager.TryExecuteCommand("CDL", false);
-            chessboardManager.TryExecuteCommand("CDL", false);
-            chessboardManager.TryExecuteCommand("CDL", false);
-            chessboardManager.TryExecuteCommand("CDL", false);
-            chessboardManager.TryExecuteCommand("CDR", false);
-            chessboardManager.TryExecuteCommand("CDR", false);
-            chessboardManager.TryExecuteCommand("CDL", false);
-            
-            //this pawn is blocked at line 6, row 0 by pawn C which is at line 7, col 1
-            chessboardManager.TryExecuteCommand("DDL", false);
-            chessboardManager.TryExecuteCommand("DDL", false);
-            chessboardManager.TryExecuteCommand("DDL", false);
-            chessboardManager.TryExecuteCommand("DDL", false);
-            chessboardManager.TryExecuteCommand("DDL", false);
-            chessboardManager.TryExecuteCommand("DDL", false);
-            
-            //the King does not need to reach row 0 to win  
-            chessboardManager.TryExecuteCommand("KUR", true);
-            chessboardManager.TryExecuteCommand("KUR", true);
-            chessboardManager.TryExecuteCommand("KUR", true);
-            chessboardManager.TryExecuteCommand("KUR", true);
-            chessboardManager.TryExecuteCommand("KUL", true);
-            chessboardManager.TryExecuteCommand("KUL", true);
-                
-            Assert.IsTrue(chessboardManager.KingWins(),
+
+            // A reaches line 7 
+            chessboardManager.TryMovePawn("ADR");
+            chessboardManager.TryMovePawn("ADR");
+            chessboardManager.TryMovePawn("ADR");
+            chessboardManager.TryMovePawn("ADR");
+            chessboardManager.TryMovePawn("ADR");
+            chessboardManager.TryMovePawn("ADR");
+            chessboardManager.TryMovePawn("ADR");
+
+            // B reaches line 7 
+            chessboardManager.TryMovePawn("BDR");
+            chessboardManager.TryMovePawn("BDR");
+            chessboardManager.TryMovePawn("BDR");
+            chessboardManager.TryMovePawn("BDR");
+            chessboardManager.TryMovePawn("BDR");
+            chessboardManager.TryMovePawn("BDL");
+            chessboardManager.TryMovePawn("BDL");
+
+            // C reaches line 7 
+            chessboardManager.TryMovePawn("CDL");
+            chessboardManager.TryMovePawn("CDL");
+            chessboardManager.TryMovePawn("CDL");
+            chessboardManager.TryMovePawn("CDL");
+            chessboardManager.TryMovePawn("CDR");
+            chessboardManager.TryMovePawn("CDR");
+            chessboardManager.TryMovePawn("CDL");
+
+            // D gets blocked at (6, 0) by C which is at (7, 1)
+            chessboardManager.TryMovePawn("DDL");
+            chessboardManager.TryMovePawn("DDL");
+            chessboardManager.TryMovePawn("DDL");
+            chessboardManager.TryMovePawn("DDL");
+            chessboardManager.TryMovePawn("DDL");
+            chessboardManager.TryMovePawn("DDL");
+
+            // The king does not need to reach row 0 to win. 
+            Assert.IsTrue(
+                chessboardManager.KingWins(),
                 "The check whether the king wins doesn't work correctly.");
         }
-        
+
         [TestMethod]
-        public void TestKingWinsWithValidPawnsMovesAndKingNotAtTheFinalRow()
+        public void TestKingWins_PawnsCanMoveAndKingNotAtRow0()
         {
             ChessboardManager chessboardManager = new ChessboardManager();
-            
-            //all pawns have valid moves
-            chessboardManager.TryExecuteCommand("ADR", false);
-            chessboardManager.TryExecuteCommand("ADR", false);
-            chessboardManager.TryExecuteCommand("ADR", false);
-            chessboardManager.TryExecuteCommand("ADR", false);
-            chessboardManager.TryExecuteCommand("ADR", false);
-            chessboardManager.TryExecuteCommand("ADR", false);
-            
-            chessboardManager.TryExecuteCommand("BDR", false);
-            chessboardManager.TryExecuteCommand("BDR", false);
-            chessboardManager.TryExecuteCommand("BDR", false);
-            chessboardManager.TryExecuteCommand("BDR", false);
-            chessboardManager.TryExecuteCommand("BDR", false);
-            chessboardManager.TryExecuteCommand("BDL", false);
-            
-            chessboardManager.TryExecuteCommand("CDL", false);
-            chessboardManager.TryExecuteCommand("CDL", false);
-            chessboardManager.TryExecuteCommand("CDL", false);
-            chessboardManager.TryExecuteCommand("CDL", false);
-            chessboardManager.TryExecuteCommand("CDR", false);
-            chessboardManager.TryExecuteCommand("CDR", false);
-            
-            chessboardManager.TryExecuteCommand("DDL", false);
-            chessboardManager.TryExecuteCommand("DDL", false);
-            chessboardManager.TryExecuteCommand("DDL", false);
-            chessboardManager.TryExecuteCommand("DDL", false);
-            chessboardManager.TryExecuteCommand("DDL", false);
-            
-            //the King does not reach row 0
-            chessboardManager.TryExecuteCommand("KUR", true);
-            chessboardManager.TryExecuteCommand("KUR", true);
-            chessboardManager.TryExecuteCommand("KUR", true);
-            chessboardManager.TryExecuteCommand("KUR", true);
-            chessboardManager.TryExecuteCommand("KUL", true);
-            chessboardManager.TryExecuteCommand("KUL", true);
-                
-            Assert.IsFalse(chessboardManager.KingWins(),
+
+            chessboardManager.TryMovePawn("ADR");
+            chessboardManager.TryMovePawn("ADR");
+            chessboardManager.TryMovePawn("ADR");
+            chessboardManager.TryMovePawn("ADR");
+            chessboardManager.TryMovePawn("ADR");
+
+            chessboardManager.TryMovePawn("BDR");
+            chessboardManager.TryMovePawn("BDR");
+            chessboardManager.TryMovePawn("BDR");
+            chessboardManager.TryMovePawn("BDR");
+            chessboardManager.TryMovePawn("BDR");
+            chessboardManager.TryMovePawn("BDL");
+
+            chessboardManager.TryMovePawn("CDL");
+            chessboardManager.TryMovePawn("CDL");
+            chessboardManager.TryMovePawn("CDL");
+            chessboardManager.TryMovePawn("CDL");
+            chessboardManager.TryMovePawn("CDR");
+            chessboardManager.TryMovePawn("CDR");
+
+            chessboardManager.TryMovePawn("DDL");
+            chessboardManager.TryMovePawn("DDL");
+            chessboardManager.TryMovePawn("DDL");
+            chessboardManager.TryMovePawn("DDL");
+            chessboardManager.TryMovePawn("DDL");
+
+            // the king does not reach row 0
+            chessboardManager.TryMoveKing("KUR");
+            chessboardManager.TryMoveKing("KUL");
+            chessboardManager.TryMoveKing("KUL");
+            chessboardManager.TryMoveKing("KUR");
+            chessboardManager.TryMoveKing("KUL");
+            chessboardManager.TryMoveKing("KUL");
+
+            Assert.IsFalse(
+                chessboardManager.KingWins(),
                 "The check whether the king wins doesn't work correctly.");
         }
 
         #endregion
-        
+
         #region KingLoses Tests
-        
+
         [TestMethod]
-        public void TestKingLosesCaseFirstTrue()
-        {
-            ChessboardManager chessboardManager = new ChessboardManager();
-            
-            // move the king to (2, 2)
-            chessboardManager.TryExecuteCommand("KUL", true);
-            chessboardManager.TryExecuteCommand("KUL", true);
-            chessboardManager.TryExecuteCommand("KUL", true);
-            chessboardManager.TryExecuteCommand("KUR", true);
-            chessboardManager.TryExecuteCommand("KUR", true);
-            
-            // move pawn A to (3, 1)
-            chessboardManager.TryExecuteCommand("ADR", false);
-            chessboardManager.TryExecuteCommand("ADL", false);
-            chessboardManager.TryExecuteCommand("ADR", false);
-            
-            // move pawn B to (1, 1)
-            chessboardManager.TryExecuteCommand("BDL", false);
-            
-            // move pawn C to (1, 3)
-            chessboardManager.TryExecuteCommand("CDL", false);
-            
-            // move pawn D to (3, 3)
-            chessboardManager.TryExecuteCommand("DDL", false);
-            chessboardManager.TryExecuteCommand("DDL", false);
-            chessboardManager.TryExecuteCommand("DDL", false);
-        
-            Assert.IsTrue(chessboardManager.KingLoses(),
-                "The check whether the king loses doesn't work correctly.");
-        }
-        
-        [TestMethod]
-        public void TestKingLosesCaseSecondFalse()
-        {
-            ChessboardManager chessboardManager = new ChessboardManager();
-            
-            // move the king to (2, 2)
-            chessboardManager.TryExecuteCommand("KUL", true);
-            chessboardManager.TryExecuteCommand("KUL", true);
-            chessboardManager.TryExecuteCommand("KUL", true);
-            chessboardManager.TryExecuteCommand("KUR", true);
-            chessboardManager.TryExecuteCommand("KUR", true);
-            
-            // move pawn A to (1, 1)
-            chessboardManager.TryExecuteCommand("ADR", false);
-            
-            // move pawn B to (3, 1)
-            chessboardManager.TryExecuteCommand("BDR", false);
-            
-            // move pawn C to (1, 5)
-            chessboardManager.TryExecuteCommand("CDR", false);
-            
-            // move pawn D to (1, 7)
-            chessboardManager.TryExecuteCommand("DDR", false);
-        
-            Assert.IsFalse(chessboardManager.KingLoses(),
-                "The check whether the king loses doesn't work correctly.");
-        }
-        
-        #endregion
-        
-        #region GetChessPiece Test 
-            
-        [TestMethod]
-        public void TestGetChessPieceByCharacter()
+        public void TestKingLoses_ReturnsTrue()
         {
             ChessboardManager chessboardManager = new ChessboardManager();
 
-            ChessPiece chessPiece = new ChessPiece(ChessPieceType.Pawn, 'K', 7, 3);
-                
-            ChessPiece clonedChessPiece = chessboardManager.GetChessPiece('K');
-                
-            Assert.AreEqual(
-                clonedChessPiece.Character,
-                chessPiece.Character,
-                "GetChessPiece by character method doesn't work!");
-            Assert.AreEqual(
-                clonedChessPiece.Row,
-                chessPiece.Row,
-                "GetChessPiece by character method doesn't work!");
+            // move the king to (2, 2)
+            chessboardManager.TryMoveKing("KUL");
+            chessboardManager.TryMoveKing("KUL");
+            chessboardManager.TryMoveKing("KUL");
+            chessboardManager.TryMoveKing("KUR");
+            chessboardManager.TryMoveKing("KUR");
+
+            // move pawn A to (3, 1)
+            chessboardManager.TryMovePawn("ADR");
+            chessboardManager.TryMovePawn("ADL");
+            chessboardManager.TryMovePawn("ADR");
+
+            // move pawn B to (1, 1)
+            chessboardManager.TryMovePawn("BDL");
+
+            // move pawn C to (1, 3)
+            chessboardManager.TryMovePawn("CDL");
+
+            // move pawn D to (3, 3)
+            chessboardManager.TryMovePawn("DDL");
+            chessboardManager.TryMovePawn("DDL");
+            chessboardManager.TryMovePawn("DDL");
+
+            Assert.IsTrue(
+                chessboardManager.KingLoses(),
+                "The check whether the king loses doesn't work correctly.");
         }
-        
+
+        [TestMethod]
+        public void TestKingLoses_ReturnsFalse()
+        {
+            ChessboardManager chessboardManager = new ChessboardManager();
+
+            // move the king to (2, 2)
+            chessboardManager.TryMoveKing("KUL");
+            chessboardManager.TryMoveKing("KUL");
+            chessboardManager.TryMoveKing("KUL");
+            chessboardManager.TryMoveKing("KUR");
+            chessboardManager.TryMoveKing("KUR");
+
+            // move pawn A to (1, 1)
+            chessboardManager.TryMovePawn("ADR");
+
+            // move pawn B to (1, 3)
+            chessboardManager.TryMovePawn("BDR");
+
+            // move pawn C to (1, 5)
+            chessboardManager.TryMovePawn("CDR");
+
+            // move pawn D to (1, 7)
+            chessboardManager.TryMovePawn("DDR");
+
+            Assert.IsFalse(
+                chessboardManager.KingLoses(),
+                "The check whether the king loses doesn't work correctly.");
+        }
+
+        #endregion
+
+        #region GetChessPiece Tests
+
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
-        public void TestGetChessPieceByCharacterException()
+        public void TestGetChessPiece_ThrowsException()
         {
             ChessboardManager chessboardManager = new ChessboardManager();
-        
-            ChessPiece clonedChessPiece = chessboardManager.GetChessPiece('E');
+
+            ChessPiece chessPiece = chessboardManager.GetChessPiece('E');
         }
-        
+
         #endregion
-        
+
         #region ToString Tests
 
         [TestMethod]
-        public void TestToStringStartScreen()
+        public void TestToString()
         {
             ChessboardManager chessboardManager = new ChessboardManager();
-                                   
+
             string expectedString =
-                                   "    0 1 2 3 4 5 6 7\r\n" +
-                                   "   -----------------\r\n" +
-                                   "0 | A - B - C - D - |\r\n" +
-                                   "1 | - + - + - + - + |\r\n" +
-                                   "2 | + - + - + - + - |\r\n" +
-                                   "3 | - + - + - + - + |\r\n" +
-                                   "4 | + - + - + - + - |\r\n" +
-                                   "5 | - + - + - + - + |\r\n" +
-                                   "6 | + - + - + - + - |\r\n" +
-                                   "7 | - + - K - + - + |\r\n" +
-                                   "   -----------------\r\n";
-        
+                "    0 1 2 3 4 5 6 7\r\n" +
+                "   -----------------\r\n" +
+                "0 | A - B - C - D - |\r\n" +
+                "1 | - + - + - + - + |\r\n" +
+                "2 | + - + - + - + - |\r\n" +
+                "3 | - + - + - + - + |\r\n" +
+                "4 | + - + - + - + - |\r\n" +
+                "5 | - + - + - + - + |\r\n" +
+                "6 | + - + - + - + - |\r\n" +
+                "7 | - + - K - + - + |\r\n" +
+                "   -----------------\r\n";
+
             Assert.AreEqual(
                 expectedString,
                 chessboardManager.ToString(),
