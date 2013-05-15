@@ -20,7 +20,7 @@ namespace KingSurvivalUnitTests
         #region TryMoveKing & TryMovePawn Tests
 
         [TestMethod]
-        public void TestTryMoveKing_InvalidCommand()
+        public void TestTryMoveKing_InvalidCommand1()
         {
             ChessboardManager chessboardManager = new ChessboardManager();
 
@@ -30,13 +30,33 @@ namespace KingSurvivalUnitTests
         }
 
         [TestMethod]
-        public void TestTryMovePawn_InvalidCommand()
+        public void TestTryMoveKing_InvalidCommand2()
+        {
+            ChessboardManager chessboardManager = new ChessboardManager();
+
+            bool success = chessboardManager.TryMoveKing("KDR");
+
+            Assert.IsFalse(success, "Move king to an invalid position returns success.");
+        }
+
+        [TestMethod]
+        public void TestTryMovePawn_InvalidCommand1()
         {
             ChessboardManager chessboardManager = new ChessboardManager();
 
             bool success = chessboardManager.TryMovePawn(null);
 
             Assert.IsFalse(success, "Move pawn command returns success for invalid commands.");
+        }
+
+        [TestMethod]
+        public void TestTryMovePawn_InvalidCommand2()
+        {
+            ChessboardManager chessboardManager = new ChessboardManager();
+
+            bool success = chessboardManager.TryMovePawn("ADL");
+
+            Assert.IsFalse(success, "Move pawn to an invalid position returns success.");
         }
 
         [TestMethod]
@@ -401,6 +421,24 @@ namespace KingSurvivalUnitTests
                 expectedString,
                 chessboardManager.ToString(),
                 "Converting to string doesn't work correctly.");
+        }
+
+        #endregion
+
+        #region GetValidCommands Tests
+
+        [TestMethod]
+        public void TestGetValidCommands()
+        {
+            ChessboardManager chessboardManager = new ChessboardManager();
+
+            string validCommands = chessboardManager.GetValidCommands();
+
+            string expectedCommands =
+                "King: KUL, KUR, KDL, KDR\r\n" +
+                "Pawns: ADL, ADR, BDL, BDR, CDL, CDR, DDL, DDR\r\n";
+
+            Assert.AreEqual(expectedCommands, validCommands, "The valids commands are not those expected.");
         }
 
         #endregion

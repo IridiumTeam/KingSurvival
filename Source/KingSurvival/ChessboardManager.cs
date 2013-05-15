@@ -296,17 +296,18 @@ namespace KingSurvival
 
         private ChessPiece GetChessPiece(int row, int col)
         {
-            foreach (KeyValuePair<char, ChessPiece> pair in this.chessPieces)
-            {
-                ChessPiece chessPiece = pair.Value;
+            ChessPiece resultChessPiece = null;
 
+            foreach (ChessPiece chessPiece in this.chessPieces.Values)
+            {
                 if (chessPiece.Row == row && chessPiece.Col == col)
                 {
-                    return chessPiece;
+                    resultChessPiece = chessPiece;
+                    break;
                 }
             }
 
-            return null;
+            return resultChessPiece;
         }
 
         #endregion
