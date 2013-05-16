@@ -7,21 +7,55 @@
 namespace KingSurvival
 {
     using System;
+    using System.IO;
+    using System.Text;
 
     /// <summary>
     /// Used to initialize the game and perform the game loop.
     /// </summary>
-    internal class Game
+    public static class Game
     {
+        /// <summary>
+        /// For testing purposes only. Plays the game with IO redirected to/from files.
+        /// </summary>
+        /// <param name="inputBytes">The content of the input file.</param>
+        /// <param name="outputBytes">The content of the output file.</param>
+        public static void RunWithIORedirected(byte[] inputBytes, byte[] outputBytes)
+        {
+            Stream inputStream = new MemoryStream(inputBytes);
+
+            //fixes the "memory stream not expandable" problem
+            Stream outputStream = new MemoryStream();
+            outputStream.Write(outputBytes, 0, outputBytes.Length);
+
+            using (StreamReader reader = new StreamReader(inputStream))
+            {
+                using (StreamWriter writer = new StreamWriter(outputStream))
+                {
+                    Console.SetIn(reader);
+                    Console.SetOut(writer);
+                    Run();
+                }
+            }
+        }
+
         /// <summary>
         /// The entry point of the program.
         /// </summary>
         private static void Main()
         {
+            Run();
+        }
+
+        /// <summary>
+        /// Starts the game loop.
+        /// </summary>
+        private static void Run()
+        {
             ChessboardManager chessboardManager = new ChessboardManager();
 
             Console.WriteLine(
-                "KING SURVIVAL\n" +
+                "KING SURVIVAL refactored by IRIDIUM TEAM\n\n" +
                 "The king has to reach the top row of the \n" +
                 "chessboard without being caught by the pawns.\n" +
                 "The valid commands are:\n" +
@@ -53,7 +87,12 @@ namespace KingSurvival
                     do
                     {
                         Console.Write("{0}'s turn: ", actor);
-                        command = Console.ReadLine();
+
+                        if (!TryReadLine(out command))
+                        {
+                            return;
+                        }
+
                         command = command.Trim().ToUpper();
 
                         if (kingsTurn)
@@ -75,6 +114,47 @@ namespace KingSurvival
                     kingsTurn = !kingsTurn;
                 }
             }
+        }
+
+        /// <summary>
+        /// Used when redirecting Console.In property to a file 
+        /// because Console.ReadLine() throws an exception in that case.
+        /// </summary>
+        /// <param name="line">A line read from the <see cref="System.IO.TextReader"/> object.</param>
+        /// <returns>True if reading can continue, false if EOF reached.</returns>
+        /// <remarks>"Console class members that work normally when the underlying stream 
+        /// is directed to a console might throw an exception if the stream is redirected, 
+        /// for example, to a file." (The MSDN article about the Console class.)</remarks>
+        private static bool TryReadLine(out string line)
+        {
+            line = string.Empty;
+            StringBuilder result = new StringBuilder();
+            int character;
+
+            do
+            {
+                character = Console.Read();
+
+                if (character > 0)
+                {
+                    result.Append((char)character);
+                }
+                else if (result.Length > 0)
+                {
+                    break;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            while (character != 13);
+
+            result.Replace("\r", string.Empty);
+            result.Replace("\n", string.Empty);
+
+            line = result.ToString();
+            return true;
         }
     }
 }

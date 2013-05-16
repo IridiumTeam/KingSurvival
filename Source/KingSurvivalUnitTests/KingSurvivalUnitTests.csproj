@@ -52,13 +52,30 @@
   <ItemGroup>
     <Compile Include="ChessboardManagerTest.cs" />
     <Compile Include="ChessPieceTest.cs" />
+    <Compile Include="GameTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\KingSurvival\KingSurvival.csproj">
       <Project>{3f7f2d3b-7a04-496c-a7dc-f53ae46720ca}</Project>
       <Name>KingSurvival</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ExpectedOutput.out" />
+    <None Include="Resources\SampleInput.in" />
+    <None Include="Resources\SampleOutput.out" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
