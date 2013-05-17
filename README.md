@@ -16,7 +16,7 @@ while **ADL** means **Pawn-A-Down-Left**. Thus all possible commands are 12: **K
 **ADL**, **ADR**, **BDL**, **BDR**, **CDL**, **CDR**, **DDL** and **DDR**.
 
 Write a program that **simulates the "King Survival" game** as shown in the sample game session. The game starts with the 
-chesspieces at their initial positions(as shown in the picture) and it's the king's turn. After the king moves, it's 
+chesspieces at their initial positions (as shown in the picture) and it's the king's turn. After the king moves, it's 
 pawns' turn and so on. Before each turn the board is visualized as shown below. If the king **reaches row 0, he wins**. 
 If the **pawns "catch" the king** so that he has no valid moves, **he loses**. If the **pawns have no valid moves, the king wins**. 
 The game ends when the king wins or loses. If the king wins, print **King wins** and the number of moves the king has made. 
