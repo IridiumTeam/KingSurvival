@@ -115,11 +115,7 @@ namespace KingSurvival
                     {
                         Console.Write("{0}'s turn: ", actor);
 
-                        if (!TryReadLine(out command))
-                        {
-                            return;
-                        }
-
+                        command = Console.ReadLine();
                         command = command.Trim().ToUpper();
 
                         if (kingsTurn)
