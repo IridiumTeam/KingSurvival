@@ -1,8 +1,10 @@
-##KingSurvival
+#KingSurvival
 
 
 Your task is to write an interactive **console-based implementation of the game "King Survival"** in which the king (K) tries
 to escape the four pawns (A, B, C, D). The game is played on a standard chessboard (8 x 8 size).
+
+![King Survival](https://raw.github.com/IridiumTeam/KingSurvival/master/Documents/KingSurvivalInitialPositions.png)
 
 The king is initially located at row 7 and column 3 and the pawns are located at row 0 and columns 0, 2, 4 and 6. 
 A pawn can only move to a neighbor square down-left or down-right, while the king can go to neighbor squares in 4 
@@ -20,3 +22,9 @@ If the pawns "catch" the king so that he has no valid moves, he loses. If the pa
 The game ends when the king wins or loses. If the king wins, print "King wins" and the number of moves the king has made. 
 If the king loses, print "King loses". Some players might try to cheat by entering invalid moves, so be cautious. 
 In case of an invalid command, print "Invalid move." and let the user enter another command.
+
+##Example Game Session
+The empty white squares are shown as "+", the empty black squares are shown as "-". The player’s input is shown 
+in italic:
+
+![King Survival](https://raw.github.com/IridiumTeam/KingSurvival/master/Documents/SampleGame.png)
