@@ -16,7 +16,7 @@ namespace KingSurvival
     public static class Game
     {
         /// <summary>
-        /// For testing purposes only. Plays the game with IO redirected to/from files.
+        /// For testing purposes only. Plays the game with I/O redirected to/from files.
         /// </summary>
         /// <param name="inputBytes">The content of the input file.</param>
         /// <param name="outputBytes">The content of the output file.</param>
@@ -24,7 +24,7 @@ namespace KingSurvival
         {
             Stream inputStream = new MemoryStream(inputBytes);
 
-            //fixes the "memory stream not expandable" problem
+            // fixes the "memory stream not expandable" problem
             Stream outputStream = new MemoryStream();
             outputStream.Write(outputBytes, 0, outputBytes.Length);
 
@@ -37,6 +37,33 @@ namespace KingSurvival
                     Run();
                 }
             }
+        }
+
+        /// <summary>
+        /// For testing purposes only. Plays the game with I/O redirected to/from files.
+        /// </summary>
+        /// <param name="inputFilePath">The path of the input file.</param>
+        /// <param name="outputFilePath">The path of the output file.</param>
+        /// <example>
+        /// This example shows how to call the <see cref="RunWithIORedirected(string, string)"/> method.
+        /// <code>
+        /// class TestClass
+        /// {
+        ///     static void Main()
+        ///     {
+        ///         RunWithIORedirected(
+        ///             Path.Combine(Environment.CurrentDirectory, "SampleInput.in"),
+        ///             Path.Combine(Environment.CurrentDirectory, "SampleOutput.out"));
+        ///     }
+        /// }
+        /// </code>
+        /// </example>
+        public static void RunWithIORedirected(string inputFilePath, string outputFilePath)
+        {
+            byte[] inputBytes = File.ReadAllBytes(inputFilePath);
+            byte[] outputBytes = File.ReadAllBytes(outputFilePath);
+
+            RunWithIORedirected(inputBytes, outputBytes);
         }
 
         /// <summary>
