@@ -24,7 +24,6 @@ If the king loses, print "King loses". Some players might try to cheat by enteri
 In case of an invalid command, print "Invalid move." and let the user enter another command.
 
 ##Example Game Session
-The empty white squares are shown as "+", the empty black squares are shown as "-". The player’s input is shown 
-in italic:
+The empty white squares are shown as "+", the empty black squares are shown as "-".
 
 ![King Survival](https://raw.github.com/IridiumTeam/KingSurvival/master/Documents/SampleGame.png)
