@@ -28,9 +28,9 @@ namespace KingSurvival
             Stream outputStream = new MemoryStream();
             outputStream.Write(outputBytes, 0, outputBytes.Length);
 
-            using (StreamReader reader = new StreamReader(inputStream))
+            using (StreamReader reader = new StreamReader(inputStream, Encoding.ASCII))
             {
-                using (StreamWriter writer = new StreamWriter(outputStream))
+                using (StreamWriter writer = new StreamWriter(outputStream, Encoding.ASCII))
                 {
                     Console.SetIn(reader);
                     Console.SetOut(writer);
@@ -60,10 +60,15 @@ namespace KingSurvival
         /// </example>
         public static void RunWithIORedirected(string inputFilePath, string outputFilePath)
         {
-            byte[] inputBytes = File.ReadAllBytes(inputFilePath);
-            byte[] outputBytes = File.ReadAllBytes(outputFilePath);
-
-            RunWithIORedirected(inputBytes, outputBytes);
+            using (StreamReader reader = new StreamReader(inputFilePath))
+            {
+                using (StreamWriter writer = new StreamWriter(outputFilePath))
+                {
+                    Console.SetIn(reader);
+                    Console.SetOut(writer);
+                    Run();
+                }
+            }
         }
 
         /// <summary>
@@ -82,11 +87,11 @@ namespace KingSurvival
             ChessboardManager chessboardManager = new ChessboardManager();
 
             Console.WriteLine(
-                "KING SURVIVAL refactored by IRIDIUM TEAM\n\n" +
-                "The king has to reach the top row of the \n" +
-                "chessboard without being caught by the pawns.\n" +
-                "The valid commands are:\n" +
-                chessboardManager.GetValidCommands());
+                "KING SURVIVAL refactored by IRIDIUM TEAM{0}{0}" +
+                "The king has to reach the top row of the {0}" +
+                "chessboard without being caught by the pawns.{0}" +
+                "The valid commands are:{0}" +
+                chessboardManager.GetValidCommands(), Environment.NewLine);
 
             bool kingsTurn = true;
 

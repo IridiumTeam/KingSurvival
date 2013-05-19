@@ -73,7 +73,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\ExpectedOutput.out" />
+    <EmbeddedResource Include="Resources\ExpectedOutput.out" />
     <None Include="Resources\SampleInput.in" />
     <None Include="Resources\SampleOutput.out" />
   </ItemGroup>

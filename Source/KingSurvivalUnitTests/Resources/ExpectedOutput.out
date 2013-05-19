@@ -1,3 +1,11 @@
+KING SURVIVAL refactored by IRIDIUM TEAM
+
+The king has to reach the top row of the 
+chessboard without being caught by the pawns.
+The valid commands are:
+King: KUL, KUR, KDL, KDR
+Pawns: ADL, ADR, BDL, BDR, CDL, CDR, DDL, DDR
+
 
     0 1 2 3 4 5 6 7
    -----------------
@@ -24,7 +32,7 @@ King's turn:
 7 | - + - + - + - + |
    -----------------
 
-Pawns's turn: 
+Pawn's turn: 
     0 1 2 3 4 5 6 7
    -----------------
 0 | A - B - + - D - |
@@ -50,7 +58,7 @@ King's turn:
 7 | - + - + - + - + |
    -----------------
 
-Pawns's turn: 
+Pawn's turn: 
     0 1 2 3 4 5 6 7
    -----------------
 0 | A - B - + - + - |
@@ -76,7 +84,7 @@ King's turn:
 7 | - + - + - + - + |
    -----------------
 
-Pawns's turn: 
+Pawn's turn: 
     0 1 2 3 4 5 6 7
    -----------------
 0 | A - + - + - + - |
@@ -102,7 +110,7 @@ King's turn:
 7 | - + - + - + - + |
    -----------------
 
-Pawns's turn: 
+Pawn's turn: 
     0 1 2 3 4 5 6 7
    -----------------
 0 | A - + - + - + - |
@@ -128,7 +136,7 @@ King's turn:
 7 | - + - + - + - + |
    -----------------
 
-Pawns's turn: 
+Pawn's turn: 
     0 1 2 3 4 5 6 7
    -----------------
 0 | + - + - + - + - |
@@ -154,7 +162,7 @@ King's turn:
 7 | - + - + - + - + |
    -----------------
 
-Pawns's turn: 
+Pawn's turn: 
     0 1 2 3 4 5 6 7
    -----------------
 0 | + - + - + - + - |

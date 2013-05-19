@@ -1,6 +1,8 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using KingSurvival;
+using System.IO;
+using System.Text;
 
 namespace KingSurvivalUnitTests
 {
@@ -13,13 +15,16 @@ namespace KingSurvivalUnitTests
         [TestMethod]
         public void TestRunWithIORedirected()
         {
-            Game.RunWithIORedirected(
-                Properties.Resources.SampleInput,
-                Properties.Resources.SampleOutput);
+            string inputFilePath = "../../Resources/SampleInput.in";
+            string outputFilePath = "../../Resources/SampleOutput.out";
+            string expectedOutputFilePath = "../../Resources/ExpectedOutput.out";
 
-            CollectionAssert.AreEqual(
-                Properties.Resources.ExpectedOutput,
-                Properties.Resources.SampleOutput);
+            Game.RunWithIORedirected(inputFilePath, outputFilePath);
+
+            string actualOutput = File.ReadAllText(outputFilePath, Encoding.ASCII);
+            string expectedOutput = File.ReadAllText(expectedOutputFilePath, Encoding.ASCII);
+
+            Assert.AreEqual(expectedOutput, actualOutput);
         }
     }
 }
